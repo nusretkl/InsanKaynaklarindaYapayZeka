@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Destekli Özgeçmiş Değerlendirme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            border-radius: 5px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>İşe Alım Değerlendirme Formu</h1>
+    <form action="/tahmin" method="post">
+        <label>Eğitim:</label>
+        <select name="education" required>
+            <option value="B.Sc">Lisans</option>
+            <option value="M.Sc">Yüksek Lisans</option>
+            <option value="PhD">Doktora</option>
+            <option value="MBA">Lise Mezunu</option>
+        </select>
+
+        <label>Deneyim (yıl):</label>
+        <input type="number" name="experience" min="0" required>
+
+        <label>Sertifika:</label>
+        <select name="certifications" required>
+            <option value="Evet">Evet</option>
+            <option value="Hayır">Hayır</option>
+        </select>
+
+        <label>Yetenekler:</label><br>
+        <input type="checkbox" name="skills" value="Python"> Python<br>
+        <input type="checkbox" name="skills" value="Java"> Java<br>
+        <input type="checkbox" name="skills" value="SQL"> SQL<br>
+        <input type="checkbox" name="skills" value="Machine Learning"> Machine Learning<br>
+        <input type="checkbox" name="skills" value="Data Analysis"> Veri Analizi<br>
+        <input type="checkbox" name="skills" value="Communication"> İletişim<br>
+
+        <label>Proje Sayısı:</label>
+        <input type="number" name="projects" min="0" required>
+
+        <label>Pozisyon:</label>
+        <select name="job_role" required>
+            <option value="Data Analyst">Veri Analisti</option>
+            <option value="Data Scientist">Veri Bilimci</option>
+            <option value="ML Engineer">Makine Öğrenimi Mühendisi</option>
+            <option value="Software Engineer">Yazılım Mühendisi</option>
+        </select>
+
+        <label>Maaş Beklentisi ($):</label>
+        <input type="number" name="salary" min="0" required>
+
+        <input type="submit" value="Değerlendir">
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h2>Sonuç: {{ prediction }}</h2>
+        <p><strong>Adayın AI Skoru:</strong> {{ ai_score }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
